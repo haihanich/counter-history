@@ -1,0 +1,58 @@
+/* Basic reset */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #222;
+}
+
+/* App container */
+.counter-app {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+/* Title */
+.counter-app h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+/* Counter value */
+#count {
+    font-size: 48px;
+    text-align: center;
+    margin: 16px 0;
+}
+
+/* Buttons */
+.controls {
+    display: flex;
+    gap: 12px;
+}
+
+.controls button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* History */
+.counter-app h2 {
+    margin-top: 24px;
+    font-size: 18px;
+}
+
+#history-list {
+    padding-left: 20px;
+    margin: 8px 0 0;
+}
