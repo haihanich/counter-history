@@ -34,6 +34,10 @@ plusBtn.addEventListener('click', () => {
 });
 
 minusBtn.addEventListener('click', () => {
+  if (count === 0) {
+    return;
+  }
+
   count -= 1;
   countEl.textContent = count;
 
