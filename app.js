@@ -10,8 +10,14 @@ const plusBtn = document.getElementById('plus-btn');
 const minusBtn = document.getElementById('minus-btn');
 const historyListEl = document.getElementById('history-list');
 
+// Helpers
+function updateMinusButton() {
+  minusBtn.disabled = count === 0;
+}
+
 // Initial render
 countEl.textContent = count;
+updateMinusButton();
 
 // Render history
 function renderHistory() {
@@ -31,6 +37,7 @@ plusBtn.addEventListener('click', () => {
 
   history.push(`+ → ${count}`);
   renderHistory();
+  updateMinusButton();
 });
 
 minusBtn.addEventListener('click', () => {
@@ -43,4 +50,5 @@ minusBtn.addEventListener('click', () => {
 
   history.push(`− → ${count}`);
   renderHistory();
+  updateMinusButton();
 });
