@@ -56,3 +56,9 @@ body {
     padding-left: 20px;
     margin: 8px 0 0;
 }
+
+/* Disabled button state */
+.controls button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
