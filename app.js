@@ -9,6 +9,7 @@ const countEl = document.getElementById('count');
 const plusBtn = document.getElementById('plus-btn');
 const minusBtn = document.getElementById('minus-btn');
 const historyListEl = document.getElementById('history-list');
+const clearHistoryBtn = document.getElementById('clear-history-btn');
 
 // Helpers
 function updateMinusButton() {
@@ -51,4 +52,9 @@ minusBtn.addEventListener('click', () => {
   history.push(`− → ${count}`);
   renderHistory();
   updateMinusButton();
+});
+
+clearHistoryBtn.addEventListener('click', () => {
+  history = [];
+  renderHistory();
 });
