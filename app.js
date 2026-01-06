@@ -11,19 +11,16 @@ const minusBtn = document.getElementById('minus-btn');
 const historyListEl = document.getElementById('history-list');
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 
-// Helpers
-function updateMinusButton() {
+// Render
+function render() {
+  // counter value
+  countEl.textContent = count;
+
+  // minus button state
   minusBtn.disabled = count === 0;
-}
 
-// Initial render
-countEl.textContent = count;
-updateMinusButton();
-
-// Render history
-function renderHistory() {
+  // history list
   historyListEl.innerHTML = '';
-
   for (const item of history) {
     const li = document.createElement('li');
     li.textContent = item;
@@ -31,14 +28,14 @@ function renderHistory() {
   }
 }
 
+// Initial render
+render();
+
 // Handlers
 plusBtn.addEventListener('click', () => {
   count += 1;
-  countEl.textContent = count;
-
   history.push(`+ → ${count}`);
-  renderHistory();
-  updateMinusButton();
+  render();
 });
 
 minusBtn.addEventListener('click', () => {
@@ -47,14 +44,11 @@ minusBtn.addEventListener('click', () => {
   }
 
   count -= 1;
-  countEl.textContent = count;
-
   history.push(`− → ${count}`);
-  renderHistory();
-  updateMinusButton();
+  render();
 });
 
 clearHistoryBtn.addEventListener('click', () => {
   history = [];
-  renderHistory();
+  render();
 });
