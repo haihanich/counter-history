@@ -21,11 +21,11 @@ function render() {
 
   // history list
   historyListEl.innerHTML = '';
-  for (const item of history) {
+  history.forEach((item, index) => {
     const li = document.createElement('li');
-    li.textContent = item;
+    li.textContent = `${index + 1}. ${item}`;
     historyListEl.appendChild(li);
-  }
+  });
 }
 
 // Initial render
