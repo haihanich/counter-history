@@ -1,17 +1,33 @@
 'use strict';
 
-// State
+// ===== Storage keys =====
+const COUNT_KEY = 'counter.count';
+const HISTORY_KEY = 'counter.history';
+
+// ===== State =====
 let count = 0;
 let history = [];
 
-// DOM
+// ===== Load from localStorage =====
+const savedCount = localStorage.getItem(COUNT_KEY);
+const savedHistory = localStorage.getItem(HISTORY_KEY);
+
+if (savedCount !== null) {
+  count = Number(savedCount);
+}
+
+if (savedHistory !== null) {
+  history = JSON.parse(savedHistory);
+}
+
+// ===== DOM =====
 const countEl = document.getElementById('count');
 const plusBtn = document.getElementById('plus-btn');
 const minusBtn = document.getElementById('minus-btn');
 const historyListEl = document.getElementById('history-list');
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 
-// Render
+// ===== Render =====
 function render() {
   // counter value
   countEl.textContent = count;
@@ -28,13 +44,20 @@ function render() {
   });
 }
 
+// ===== Save to localStorage =====
+function saveState() {
+  localStorage.setItem(COUNT_KEY, count);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
 // Initial render
 render();
 
-// Handlers
+// ===== Handlers =====
 plusBtn.addEventListener('click', () => {
   count += 1;
   history.push(`+ → ${count}`);
+  saveState();
   render();
 });
 
@@ -45,10 +68,12 @@ minusBtn.addEventListener('click', () => {
 
   count -= 1;
   history.push(`− → ${count}`);
+  saveState();
   render();
 });
 
 clearHistoryBtn.addEventListener('click', () => {
   history = [];
+  saveState();
   render();
 });
