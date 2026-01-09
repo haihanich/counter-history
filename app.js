@@ -27,6 +27,12 @@ const minusBtn = document.getElementById('minus-btn');
 const historyListEl = document.getElementById('history-list');
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 
+// ===== Save to localStorage =====
+function saveState() {
+  localStorage.setItem(COUNT_KEY, count);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
 // ===== Render =====
 function render() {
   // counter value
@@ -40,14 +46,14 @@ function render() {
   history.forEach((item, index) => {
     const li = document.createElement('li');
     li.textContent = `${index + 1}. ${item}`;
+
+    // animate only the last item
+    if (index === history.length - 1) {
+      li.classList.add('animated');
+    }
+
     historyListEl.appendChild(li);
   });
-}
-
-// ===== Save to localStorage =====
-function saveState() {
-  localStorage.setItem(COUNT_KEY, count);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
 }
 
 // Initial render
