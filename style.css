@@ -70,6 +70,12 @@ body {
     cursor: pointer;
 }
 
+#reset-all-btn {
+    margin-top: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
 /* History item animation (only for newly added item) */
 #history-list li {
     opacity: 1;

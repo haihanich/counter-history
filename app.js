@@ -26,6 +26,7 @@ const plusBtn = document.getElementById('plus-btn');
 const minusBtn = document.getElementById('minus-btn');
 const historyListEl = document.getElementById('history-list');
 const clearHistoryBtn = document.getElementById('clear-history-btn');
+const resetAllBtn = document.getElementById('reset-all-btn');
 
 // ===== Save to localStorage =====
 function saveState() {
@@ -81,5 +82,13 @@ minusBtn.addEventListener('click', () => {
 clearHistoryBtn.addEventListener('click', () => {
   history = [];
   saveState();
+  render();
+});
+
+resetAllBtn.addEventListener('click', () => {
+  count = 0;
+  history = [];
+  localStorage.removeItem(COUNT_KEY);
+  localStorage.removeItem(HISTORY_KEY);
   render();
 });
