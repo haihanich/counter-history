@@ -86,6 +86,12 @@ clearHistoryBtn.addEventListener('click', () => {
 });
 
 resetAllBtn.addEventListener('click', () => {
+  const isConfirmed = confirm('Reset counter and history?');
+
+  if (!isConfirmed) {
+    return;
+  }
+
   count = 0;
   history = [];
   localStorage.removeItem(COUNT_KEY);
