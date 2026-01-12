@@ -8,6 +8,9 @@ const HISTORY_KEY = 'counter.history';
 let count = 0;
 let history = [];
 
+// Prevent animating existing history on first page load
+let isFirstRender = true;
+
 // ===== Load from localStorage =====
 const savedCount = localStorage.getItem(COUNT_KEY);
 const savedHistory = localStorage.getItem(HISTORY_KEY);
@@ -17,7 +20,12 @@ if (savedCount !== null) {
 }
 
 if (savedHistory !== null) {
-  history = JSON.parse(savedHistory);
+  try {
+    history = JSON.parse(savedHistory);
+  } catch {
+    history = [];
+    localStorage.removeItem(HISTORY_KEY);
+  }
 }
 
 // ===== DOM =====
@@ -30,17 +38,23 @@ const resetAllBtn = document.getElementById('reset-all-btn');
 
 // ===== Save to localStorage =====
 function saveState() {
-  localStorage.setItem(COUNT_KEY, count);
+  localStorage.setItem(COUNT_KEY, String(count));
   localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
 }
 
 // ===== Render =====
 function render() {
   // counter value
-  countEl.textContent = count;
+  countEl.textContent = String(count);
 
   // minus button state
   minusBtn.disabled = count === 0;
+
+  // history action buttons state
+  const hasHistory = history.length > 0;
+  clearHistoryBtn.disabled = !hasHistory;
+  resetAllBtn.disabled = !hasHistory && count === 0; 
+  // reset имеет смысл, если есть история ИЛИ count не ноль
 
   // history list
   historyListEl.innerHTML = '';
@@ -48,13 +62,15 @@ function render() {
     const li = document.createElement('li');
     li.textContent = `${index + 1}. ${item}`;
 
-    // animate only the last item
-    if (index === history.length - 1) {
+    // animate only the newly added item (not on first render)
+    if (!isFirstRender && index === history.length - 1) {
       li.classList.add('animated');
     }
 
     historyListEl.appendChild(li);
   });
+
+  isFirstRender = false;
 }
 
 // Initial render
@@ -80,14 +96,21 @@ minusBtn.addEventListener('click', () => {
 });
 
 clearHistoryBtn.addEventListener('click', () => {
+  if (history.length === 0) {
+    return;
+  }
+
   history = [];
   saveState();
   render();
 });
 
 resetAllBtn.addEventListener('click', () => {
-  const isConfirmed = confirm('Reset counter and history?');
+  if (history.length === 0 && count === 0) {
+    return;
+  }
 
+  const isConfirmed = confirm('Reset counter and history?');
   if (!isConfirmed) {
     return;
   }
